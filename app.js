@@ -35,7 +35,7 @@ server.listen(app.get('port'), function(){
 
 io.on('connection', function(socket) {
 	socket.on('message', function(data) {
-		socket.emit('message', data);
+    io.sockets.emit('message', data);
 	});
 });
 
