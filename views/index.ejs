@@ -13,9 +13,23 @@
           socket.emit('message', $('#content').val());
         });
 
-	    	socket.on('message', function(data) {
-	    		$('#messages').append('<li>' + data + '</li>');
-	    	});
+        $(document).mousemove(function(e) {
+          socket.emit('cursor', { x: e.pageX, y: e.pageY });
+        });
+
+        socket.on('message', function(data) {
+          $('#messages').append('<li>' + data + '</li>');
+        });
+
+        socket.on('cursor', function(data) {
+          var $cursor = $('#cursor-' + data.id);
+          if($cursor.length) {
+            $cursor.css('left', data.x);
+            $cursor.css('top', data.y);
+          } else {
+            $('#cursors').append('<div id="cursor-' + data.id + '" style="position: absolute;">0</div>');
+          }
+        });
     	});
     </script>
   </head>
@@ -24,5 +38,6 @@
     <input id="content" type="text" />
     <button id="send">send</button>
     <ul id="messages"></ul>
+    <div id="cursors"></div>
   </body>
 </html>

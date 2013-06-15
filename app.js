@@ -37,6 +37,10 @@ io.on('connection', function(socket) {
 	socket.on('message', function(data) {
     io.sockets.emit('message', data);
 	});
+  socket.on('cursor', function(data) {
+    data.id = socket.id;
+    io.sockets.emit('cursor', data);
+  });
 });
 
 
